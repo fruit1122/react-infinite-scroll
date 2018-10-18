@@ -26,10 +26,10 @@ export default class InfiniteScoll extends Component {
         this.attachScrollListener();
     }
 
-    componentWillReceiveProps(){
+   /* componentWillReceiveProps(){
         console.log("componentWillReceiveProps",this.props.getParent())
        //this.attachScrollListener();
-    }
+    }*/
     /*
         1.render()
         2.getSnapshotBeforeUpdate()
@@ -37,6 +37,7 @@ export default class InfiniteScoll extends Component {
         4.componentDidUpdate
     */
     //시점 4
+    /*
     componentWillUpdate(prevProps, prevState, snapshot) {
         console.log("componentWillUpdate",this.props,prevProps,snapshot)
         this.attachScrollListener();
@@ -44,12 +45,12 @@ export default class InfiniteScoll extends Component {
     }
 
     componentDidUpdate(){
-        console.log("????")
-    }
+    }*/
 
     //컴포넌트 삭제 시 
     componentWillUnmount(){
-        console.log("componentWillUnmount")
+        console.log("componentWillUnmount");
+        this.dettachScrollListener();
 
     }
 
@@ -121,7 +122,7 @@ export default class InfiniteScoll extends Component {
 
     render(){
             /**/
-        const {hasMore} = this.props;
+       const {hasMore} = this.props;
        return(<div ref={(ref)=>this._props.scrollNode = ref}>{this.props.children}</div>)
 
     }

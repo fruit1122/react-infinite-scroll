@@ -20,8 +20,13 @@ class App extends Component {
       datas : [],
       nextHref : null
     }
+  }
+   // DOM 에 관련된 작업: 스크롤 설정, 크기 읽어오기 등
+   componentDidMount(){
+    console.log("App componentDidMount",this.scrollParent)
     this.loadItem(0);
   }
+
   // 1. 처음 데이터 가져오기 
   loadItem =(page)=>{
     var url = api.baseUrl + '/users/8665091/favorites';
@@ -35,7 +40,6 @@ class App extends Component {
     }, {
         cache: true
     }).then((resp)=>{
-      console.log(resp);
       this.setState({
         nextHref : resp.data.next_href,
         datas : this.state.datas.concat(resp.data.collection)
@@ -45,15 +49,17 @@ class App extends Component {
 //()=>{console.log(this);return this.scrollParent}
   render() {
     const {datas} = this.state;
+    if(datas.length == 0) return(<div className="App" ref={this.scrollParent}></div>)
+
     var items = [];
     items = datas.map(v=>(<div key={v.id}><img src={v.artwork_url} width="100" height="100" ></img><span>{v.title}</span></div>))
 
     return (
-      <div className="App" ref={ref => this.scrollParent = ref}>
+      <div className="App" ref={this.scrollParent}>
         <InfinitScroll 
         pageStart={1}
         loadItem={this.loadItem}
-        getParent={()=>this.scrollParent}>
+        getParent={()=>{return this.scrollParent.current;}}>
           {items}
         </InfinitScroll>
       </div>
